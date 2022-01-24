@@ -3,7 +3,7 @@ import numpy as np
 import argparse
 
 from getPokec import MyDataset
-from deeprobust.graph.defense import GCN
+from AAGNN.GCN import GCN
 
 ################################################
 # Configuration
@@ -71,24 +71,43 @@ print(task2classes)
 # Baseline model
 ################################################
 
-print("1")
 # Classifier for labels
 baseline_task1 = GCN(
-    nfeat=data["features"].shape[1],
-    nclass=2,
-    nhid=args.hidden_layers,
+    input_features=data["features"].shape[1],
+    output_classes=data["labels"].max().item()+1,
+    hidden_layers=args.hidden_layers,
     device=device,
     lr=args.model_lr,
     dropout=args.dropout,
-    weight_decay=args.weight_decay)
-print("2")
+    weight_decay=args.weight_decay,
+    name="baseline_task1")
 
 baseline_task1.fit(
     features=data["features"], 
     adj=data["adj"], 
     labels=task1classes, 
     idx_train=data["idx_train"], 
-    idx_val=data["idx_test"], 
-    train_iters=5,
-    verbose=True
+    idx_test=data["idx_test"], 
+    epochs=5
+)
+
+# Classifier for secondary task
+
+baseline_task2 = GCN(
+    input_features=data["features"].shape[1],
+    output_classes=data["labels"].max().item()+1,
+    hidden_layers=args.hidden_layers,
+    device=device,
+    lr=args.model_lr,
+    dropout=args.dropout,
+    weight_decay=args.weight_decay,
+    name="baseline_task2")
+
+baseline_task2.fit(
+    features=data["features"], 
+    adj=data["adj"], 
+    labels=task2classes, 
+    idx_train=data["idx_train"], 
+    idx_test=data["idx_test"], 
+    epochs=5
 )
