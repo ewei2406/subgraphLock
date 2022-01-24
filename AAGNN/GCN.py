@@ -1,5 +1,4 @@
 import torch
-from torch_geometric.utils.dropout import dropout_adj
 from torch_geometric.nn import DenseGCNConv
 import torch.nn.functional as F
 from tqdm import tqdm
