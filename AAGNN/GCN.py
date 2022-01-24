@@ -49,3 +49,18 @@ class GCN(torch.nn.Module):
             t.set_postfix({"loss": round(loss.item(), 2)})
         
         return predictions
+    
+    def train1epoch(self, features, adj, labels, idx_train, idx_test):
+        self.train()
+        optimizer = torch.optim.Adam(
+            self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+
+        optimizer.zero_grad()
+        predictions = self(features, adj)
+        
+        loss = F.cross_entropy(predictions[idx_train], labels[idx_train])
+        
+        loss.backward()
+        optimizer.step()
+
+        return loss.item()
