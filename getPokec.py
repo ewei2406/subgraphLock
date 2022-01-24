@@ -57,9 +57,9 @@ class MyDataset(DGLDataset):
         g.edata['weight'] = edge_features
 
         nx_g = dgl.to_networkx(g)
-        print(nx.classes.function.density(nx_g))
-        print(nx_g.number_of_nodes())
-        print(nx_g.number_of_edges())
+        # print(nx.classes.function.density(nx_g))
+        # print(nx_g.number_of_nodes())
+        # print(nx_g.number_of_edges())
 
         if node_attributes is not None:
             for l in list(node_attributes):
@@ -92,7 +92,7 @@ class MyDataset(DGLDataset):
         self.graph.ndata['val_mask'] = val_mask
         self.graph.ndata['test_mask'] = test_mask
 
-        print('Finished data loading and preprocessing.')
+        # print('Finished data loading and preprocessing.')
         print('  NumNodes: {}'.format(self.graph.number_of_nodes()))
         print('  NumEdges: {}'.format(self.graph.number_of_edges()))
         print('  NumFeats: {}'.format(self.graph.ndata['feat'].shape[1]))
@@ -110,6 +110,15 @@ class MyDataset(DGLDataset):
     def __len__(self):
         return 1
 
+    def getComponents(self):
+        return {
+            "adj": self.graph.adj().to_dense(),
+            "labels": self.graph.ndata['label'],
+            "features": self.graph.ndata['feat'],
+            "idx_train": self.graph.ndata['train_mask'],
+            "idx_val": self.graph.ndata['val_mask'],
+            "idx_test": self.graph.ndata['test_mask'],
+        }
 
 def process_raw_pokec():
 
