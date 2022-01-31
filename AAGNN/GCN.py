@@ -31,6 +31,10 @@ class GCN(torch.nn.Module):
     
     def fit(self, features, adj, labels, idx_train, idx_test, epochs):
 
+        features = features.to(self.device)
+        adj = adj.to(self.device)
+        labels = labels.to(self.device)
+
         self.train()
         optimizer = torch.optim.Adam(
             self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
@@ -51,6 +55,11 @@ class GCN(torch.nn.Module):
         return predictions
     
     def train1epoch(self, features, adj, labels, idx_train, idx_test):
+
+        features = features.to(self.device)
+        adj = adj.to(self.device)
+        labels = labels.to(self.device)
+        
         self.train()
         optimizer = torch.optim.Adam(
             self.parameters(), lr=self.lr, weight_decay=self.weight_decay)

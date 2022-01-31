@@ -19,9 +19,9 @@ def loadGraph(root, name, setting, seed, device, verbose=True):
         arr[indices] = 1
         return arr > 0
 
-    idx_train = utils.idx_to_bool(data.idx_train, features.shape[0])
-    idx_val = utils.idx_to_bool(data.idx_val, features.shape[0])
-    idx_test = utils.idx_to_bool(data.idx_test, features.shape[0])
+    idx_train = utils.idx_to_bool(data.idx_train, features.shape[0]).to(device)
+    idx_val = utils.idx_to_bool(data.idx_val, features.shape[0]).to(device)
+    idx_test = utils.idx_to_bool(data.idx_test, features.shape[0]).to(device)
 
     if verbose:
         print()
