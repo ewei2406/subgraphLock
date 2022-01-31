@@ -10,7 +10,7 @@ def loadGraph(root, name, setting, seed, device, verbose=True):
     data = Dataset(root, name, setting, seed)
 
     adj = torch.LongTensor(data.adj.todense()).to(device)
-    adj = utils.make_symmetric(adj)
+    adj = utils.make_symmetric(adj).to(device)
     labels = torch.LongTensor(data.labels).to(device)
     features = torch.FloatTensor(np.array(data.features.todense())).to(device)
 
