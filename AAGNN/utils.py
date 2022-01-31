@@ -150,6 +150,15 @@ def projection(perturbations, n_perturbations):
     return perturbations
 
 
+def get_task(idx, features):
+
+    task = features.t()[idx].long()
+
+    f = features.t()
+    f = torch.cat([f[0:idx], f[idx+1:]]).t()
+
+    return task, f
+
 
 # DO NOT USE!!!
 # def random_sample(surrogate_model, features, adj, labels, idx_test, loss_fn, perturbations, k=10):
