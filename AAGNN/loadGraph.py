@@ -4,6 +4,7 @@ import numpy as np
 
 from AAGNN.dataset import Dataset
 import AAGNN.utils as utils
+from AAGNN.getPokec import MyDataset
 
 
 def loadGraph(root, name, setting, seed, device, verbose=True):
@@ -36,15 +37,22 @@ def loadGraph(root, name, setting, seed, device, verbose=True):
     return adj, labels, features, idx_train, idx_val, idx_test
 
 
-def loadData(root, seed, device, verbose=True):
-    edges = np.loadtxt(root, delimiter="\t", dtype=int)
-    edges = torch.from_numpy(edges).t()
-    adj = utils.to_adj(edges)
-    adj.to(device)
-    adj.to_dense()
+def loadPokec(device):
+    pokec = MyDataset("pokec2")
 
-    return adj
+    adj = pokec.graph.adj().to_dense().to(device)
+    labels = pokec.graph.ndata['label'].to(device)
+    features = pokec.graph.ndata['feat'].to(device)
+    idx_train = pokec.graph.ndata['train_mask'].to(device)
+    idx_val = pokec.graph.ndata['val_mask'].to(device)
+    idx_test = pokec.graph.ndata['test_mask'].to(device)
 
+    return adj, labels, features, idx_train, idx_val, idx_test
+
+
+
+if __name__ == "__main__":
+    loadPokec()
 
 class Graph:
     def __init__(self, root, name, setting, seed, device):

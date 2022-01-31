@@ -5,7 +5,7 @@ from tqdm import tqdm
 import torch.nn.functional as F
 
 from AAGNN.dataset import Dataset
-from AAGNN.loadGraph import loadGraph
+from AAGNN.loadGraph import loadGraph, loadPokec
 from AAGNN.GCN import GCN
 from AAGNN import metrics
 from AAGNN import utils
@@ -31,7 +31,7 @@ parser.add_argument('--ptb_epochs', type=int, default=15, help='Epochs to pertur
 parser.add_argument('--surrogate_epochs', type=int, default=10, help='Epochs to train surrogate before perturb')
 
 parser.add_argument('--csv', type=str, default='', help='save the outputs to csv')
-parser.add_argument('--dataset', type=str, default='polblogs', help='dataset')
+parser.add_argument('--dataset', type=str, default='pokec', help='dataset')
 parser.add_argument('--ntasks', type=int, default=2, help='number of additional tasks')
 args = parser.parse_args()
 
@@ -58,7 +58,10 @@ print(f'  torch seed: {args.seed}')
 
 print(f'==== Dataset: {args.dataset} ====')
 
-adj, labels, features, idx_train, idx_val, idx_test = loadGraph('./datasets', args.dataset, 'gcn', args.seed, device)
+if args.dataset == 'pokec':
+    adj, labels, features, idx_train, idx_val, idx_test = loadPokec(device)
+else:
+    adj, labels, features, idx_train, idx_val, idx_test = loadGraph('./datasets', args.dataset, 'gcn', args.seed, device)
 
 features = features.to(device)
 adj = adj.to(device)
