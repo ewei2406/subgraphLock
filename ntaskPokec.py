@@ -33,13 +33,17 @@ parser.add_argument('--surrogate_epochs', type=int, default=10, help='Epochs to 
 parser.add_argument('--csv', type=str, default='', help='save the outputs to csv')
 parser.add_argument('--dataset', type=str, default='pokec', help='dataset')
 parser.add_argument('--ntasks', type=int, default=1, help='number of additional tasks')
+parser.add_argument('--cpuonly', type=str, default='N', help='use cpu only')
 args = parser.parse_args()
 
 ################################################
 # Environment
 ################################################
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+if args.cpuonly == 'Y':
+    device = torch.device('cpu')
+else:
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 np.random.seed(args.seed)
 torch.manual_seed(args.seed)
