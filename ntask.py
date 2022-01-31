@@ -63,10 +63,6 @@ if args.dataset == 'pokec':
 else:
     adj, labels, features, idx_train, idx_val, idx_test = loadGraph('./datasets', args.dataset, 'gcn', args.seed, device)
 
-features = features.to(device)
-adj = adj.to(device)
-labels = labels.to(device)
-
 tasks = {0: labels}
 for task in range(args.ntasks):
     tasks[task + 1], features = utils.get_task(0, features)

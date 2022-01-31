@@ -47,6 +47,8 @@ def loadPokec(device):
     idx_val = pokec.graph.ndata['val_mask'].to(device)
     idx_test = pokec.graph.ndata['test_mask'].to(device)
 
+    del pokec
+
     return adj, labels, features, idx_train, idx_val, idx_test
 
 
