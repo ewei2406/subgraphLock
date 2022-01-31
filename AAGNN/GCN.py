@@ -18,6 +18,8 @@ class GCN(torch.nn.Module):
         self.weight_decay = weight_decay
         self.name = name
         self.device = device
+        if torch.cuda.is_available():
+            self.cuda()
 
     def forward(self, x, adj):
         # x, edge_index = data.x, data.edge_index
@@ -59,7 +61,7 @@ class GCN(torch.nn.Module):
         features = features.to(self.device)
         adj = adj.to(self.device)
         labels = labels.to(self.device)
-        
+
         self.train()
         optimizer = torch.optim.Adam(
             self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
