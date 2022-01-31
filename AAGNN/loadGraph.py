@@ -40,14 +40,12 @@ def loadGraph(root, name, setting, seed, device, verbose=True):
 def loadPokec(device):
     pokec = MyDataset("pokec2")
 
-    adj = pokec.graph.adj().to_dense().to(device)
-    labels = pokec.graph.ndata['label'].to(device)
-    features = pokec.graph.ndata['feat'].to(device)
-    idx_train = pokec.graph.ndata['train_mask'].to(device)
-    idx_val = pokec.graph.ndata['val_mask'].to(device)
-    idx_test = pokec.graph.ndata['test_mask'].to(device)
-
-    del pokec
+    adj = pokec.graph.adj().to_dense()
+    labels = pokec.graph.ndata['label']
+    features = pokec.graph.ndata['feat']
+    idx_train = pokec.graph.ndata['train_mask']
+    idx_val = pokec.graph.ndata['val_mask']
+    idx_test = pokec.graph.ndata['test_mask']
 
     return adj, labels, features, idx_train, idx_val, idx_test
 
