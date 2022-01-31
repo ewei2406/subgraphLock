@@ -32,7 +32,7 @@ parser.add_argument('--surrogate_epochs', type=int, default=10, help='Epochs to 
 
 parser.add_argument('--csv', type=str, default='', help='save the outputs to csv')
 parser.add_argument('--dataset', type=str, default='pokec', help='dataset')
-parser.add_argument('--ntasks', type=int, default=2, help='number of additional tasks')
+parser.add_argument('--ntasks', type=int, default=1, help='number of additional tasks')
 args = parser.parse_args()
 
 ################################################
