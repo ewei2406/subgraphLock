@@ -18,7 +18,7 @@ class GCN(torch.nn.Module):
         self.weight_decay = weight_decay
         self.name = name
         self.device = device
-        if torch.cuda.is_available():
+        if torch.cuda.is_available() and device.type != 'cpu':
             self.cuda()
 
     def forward(self, x, adj):
