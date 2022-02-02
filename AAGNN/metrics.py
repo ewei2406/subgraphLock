@@ -28,7 +28,7 @@ def partial_acc(predictions, labels, g0, g_g0):
         "gX": gX_acc
     }
 
-def mask_adj(adj, bool_list):
+def mask_adj(adj, bool_list, device):
     idx = utils.bool_to_idx(bool_list).squeeze().to(device)
 
     temp_adj = adj.clone().to(device)
@@ -44,7 +44,7 @@ def mask_adj(adj, bool_list):
 
     return diff
 
-def show_metrics(changes, labels, g0):
+def show_metrics(changes, labels, g0, device):
     def print_same_diff(type, adj):
         edges = utils.to_edges(adj)
         same = 0
@@ -65,11 +65,11 @@ def show_metrics(changes, labels, g0):
     # print_add_remove(changes)
 
     print("     Within G0 ====")
-    g0_adj = mask_adj(changes, g0)
+    g0_adj = mask_adj(changes, g0, device)
     print_add_remove(g0_adj)
 
     print("     Within GX ====")
-    gX_adj = mask_adj(changes, ~g0)
+    gX_adj = mask_adj(changes, ~g0, device)
     print_add_remove(gX_adj)
 
     print("     Between G0-GX ====")

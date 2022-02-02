@@ -275,5 +275,5 @@ for t in tasks:
 
 print()
 print("=====EDGE CHANGES=====")
-metrics.show_metrics(change, tasks[0], g0)
+metrics.show_metrics(change, tasks[0], g0, device)
 
