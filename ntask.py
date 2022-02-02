@@ -261,6 +261,7 @@ for t in tasks:
 
 locked_adj = utils.get_modified_adj(adj, best)
 change = locked_adj - adj
+change = change.to(device)
 
 print(f"Randomly selected: {args.random_select}\n")
 print(f"Ptb rate: {args.ptb_rate}\n")

@@ -29,13 +29,13 @@ def partial_acc(predictions, labels, g0, g_g0):
     }
 
 def mask_adj(adj, bool_list):
-    idx = utils.bool_to_idx(bool_list).squeeze()
+    idx = utils.bool_to_idx(bool_list).squeeze().to(device)
 
-    temp_adj = adj.clone()
+    temp_adj = adj.clone().to(device)
     temp_adj.index_fill_(dim=0, index=idx, value=0)
     diff = adj - temp_adj
 
-    temp_adj = diff.clone()
+    temp_adj = diff.clone().to(device)
     temp_adj.index_fill_(dim=1, index=idx, value=0)
     diff = diff - temp_adj
 
