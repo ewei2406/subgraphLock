@@ -33,6 +33,9 @@ class GCN(torch.nn.Module):
     
     def fit(self, features, adj, labels, idx_train, idx_test, epochs):
 
+        if epochs == 0:
+            return None
+
         features = features.to(self.device)
         adj = adj.to(self.device)
         labels = labels.to(self.device)
