@@ -1,0 +1,8 @@
+name: pygraph
+channels:
+  - defaults
+dependencies:
+  - pytorch==1.9.0
+  - cudatoolkit=10.2
+  - pyg
+prefix: /u/nyw6dh/.conda/envs/pygraph
